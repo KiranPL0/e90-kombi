@@ -26,30 +26,8 @@ function script.update(dt)
     left_signal = ac.getCar().turningLeftLights
     right_signal = ac.getCar().turningRightLights
     hazard_signal = ac.getCar().hazardLights
-end
 
-function script.windowMain(dt)
-    ui.text("Left Signal Status: " .. tostring(left_signal))
-    ui.text("Right Signal Status: " .. tostring(right_signal))
-    ui.text("Hazard Lights Status: " .. tostring(hazard_signal))
-
-    ui.text("Speed: ".. tostring(speed))
-    ui.text("RPM: ".. tostring(rpm))
-    ui.text("abs: ".. tostring(abs))
-    ui.text("GEAR: ".. tostring(gear))
-    ui.text("Fuel: ".. tostring(fuel))
-    ui.text("Engine: ".. tostring(engine))
-    ui.text("Traction: ".. tostring(tclevel))
-    ui.text("Headlights: ".. tostring(ac.getCar().headlightsActive))
-    ui.text("Low Beams: ".. tostring(ac.getCar().lowBeams))
-    ui.text("High Beams: ".. tostring(high_beams))
-    ui.text("Handbrake: ".. tostring(handbrake))
-
-    ui.text(ac.getCar())
-
-    -- data_send()
-
-    speed = ac.getCar().speedKmh
+        speed = ac.getCar().speedKmh
     rpm = ac.getCar().rpm
     gear = ac.getCar().gear -- -1 = Reverse; 0 = Neutral, 1 = 1st, ..
     fuel = (ac.getCar().fuel/ac.getCar().maxFuel) * 100
@@ -73,6 +51,30 @@ function script.windowMain(dt)
         -- print(tostring(speed).."$"..tostring(rpm).."$"..tostring(abs).."$"..tostring(gear).."$"..tostring(fuel).."$"..tostring(engine).."$"..tostring(tclevel).."$"..tostring(left_signal).."$"..tostring(right_signal).."$"..tostring(hazard_signal).."$"..tostring(high_beams).."$"..tostring(handbrake).."$"..tostring(headlight))
     
 end
+
+end
+
+function script.windowMain(dt)
+    ui.text("Left Signal Status: " .. tostring(left_signal))
+    ui.text("Right Signal Status: " .. tostring(right_signal))
+    ui.text("Hazard Lights Status: " .. tostring(hazard_signal))
+
+    ui.text("Speed: ".. tostring(speed))
+    ui.text("RPM: ".. tostring(rpm))
+    ui.text("abs: ".. tostring(abs))
+    ui.text("GEAR: ".. tostring(gear))
+    ui.text("Fuel: ".. tostring(fuel))
+    ui.text("Engine: ".. tostring(engine))
+    ui.text("Traction: ".. tostring(tclevel))
+    ui.text("Headlights: ".. tostring(ac.getCar().headlightsActive))
+    ui.text("Low Beams: ".. tostring(ac.getCar().lowBeams))
+    ui.text("High Beams: ".. tostring(high_beams))
+    ui.text("Handbrake: ".. tostring(handbrake))
+
+    ui.text(ac.getCar())
+
+    -- data_send()
+
     
 end
 
