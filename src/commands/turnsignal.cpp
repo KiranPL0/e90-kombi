@@ -1,8 +1,8 @@
 #include <commands.h>
 #include <CAN.h>
 
-bool left_signal = false;
-bool right_signal = false;
+bool left_signal_internal = false;
+bool right_signal_internal = false;
 
 void leftSignalInit(){
     CAN.beginPacket(0x1F6);
@@ -11,7 +11,7 @@ void leftSignalInit(){
     CAN.write(0xF2);
 
     CAN.endPacket();
-    left_signal = true;
+    left_signal_internal = true;
 }
 
 void rightSignalInit(){
@@ -21,13 +21,13 @@ void rightSignalInit(){
     CAN.write(0xF2);
 
     CAN.endPacket();
-    right_signal = true;
+    right_signal_internal = true;
 }
 
 
 
 void runTurnSignal(){
-    if (left_signal){
+    if (left_signal_internal){
         CAN.beginPacket(0x1F6);
 
         CAN.write(0x91);
@@ -36,7 +36,7 @@ void runTurnSignal(){
         CAN.endPacket();
     }
 
-    if (right_signal){
+    if (right_signal_internal){
         CAN.beginPacket(0x1F6);
 
         CAN.write(0xA1);
@@ -47,8 +47,8 @@ void runTurnSignal(){
 }
 
 void signalOff(){
-    left_signal = false;
-    right_signal = false;
+    left_signal_internal = false;
+    right_signal_internal = false;
 
     CAN.beginPacket(0x1F6);
 
@@ -65,13 +65,17 @@ void updateTurnSignal(bool left, bool indicator){
             // left turn ON
             leftSignalInit();
         }else{
-            signalOff();
+            left_signal_internal = false;
         }
     }else{
         if (indicator){
             rightSignalInit();
         }else{
-            signalOff();
+            right_signal_internal = false;
         }
+    }
+
+    if (!left_signal_internal && !right_signal_internal){
+        signalOff();
     }
 }

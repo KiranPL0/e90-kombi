@@ -6,7 +6,7 @@
 
 
 void sendFuelLevel(int percent){
-    uint16_t sensor = percent * 160;
+    uint16_t sensor = static_cast<uint16_t>(percent * 160);
 
 
     CAN.beginPacket(0x349);

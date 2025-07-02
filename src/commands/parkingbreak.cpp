@@ -10,6 +10,15 @@ void sendParkingBreak(bool state){
         CAN.write(0xFF);
 
         CAN.endPacket();
+        // CAN.beginPacket(436);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0b01000000);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
     }else{
         CAN.beginPacket(0x34F);
         
@@ -17,5 +26,15 @@ void sendParkingBreak(bool state){
         CAN.write(0xFF);
 
         CAN.endPacket();
+        // CAN.beginPacket(436);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+        // CAN.write(0b00000000);
+        // CAN.write(0x00);
+        // CAN.write(0x00);
+
     }
 }

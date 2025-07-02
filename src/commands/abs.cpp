@@ -21,6 +21,25 @@ void sendAbs(){
     
 }
 
+// void sendAbs(){
+
+//     byte2 = ((((byte2 >> 4) + 3) << 4) & 0xF0) | 0x03;
+//     CAN.beginPacket(0x19E);
+
+//     CAN.write(0x00);
+//     CAN.write(0xE0);
+//     CAN.write(byte2);
+//     CAN.write(0xFC);
+//     CAN.write(0xF0);
+//     CAN.write(0x43);
+//     CAN.write(0x31);
+//     CAN.write(0x65);
+
+//     CAN.endPacket();
+    
+// }
+
+
 
 void sendAbsCount(){
     static uint8_t lower = 0;

@@ -329,50 +329,138 @@ int timestamp5000ms = millis();
 
 int speed = 0;
 int rpm = 0;
-int absLevel = 0; // unused for now
+bool absStatus; // unused for now
 String gear = "P";
 int fuelpercentage = 0;
-int engineStatus = 0;
+bool engineStatus = false;
 int tcLevel = 0; // unused for now
 int hour = 0;
 int minute = 0;
+bool left_fuckass_signal = false;
+bool right_fuckass_signal = false;
+bool hazard_signal = false;
+bool highbeams = false;
+bool handbrake = false;
+bool headlight = false;
 float fuelPercentageforcalc = 0;
 
 String serialBuffer = "";
+bool packetReady = false;
 
-void handleSerialData(){
-    serialBuffer += Serial.readStringUntil('&');
-    serialBuffer += '&';
-    String parts[10];
-    int partCount = 0;
-    int start = 0;
-    int end = serialBuffer.indexOf('-');
+unsigned long lastSerialRecieved = 0;
 
-    while (end != -1 && partCount < 10){
-      parts[partCount++] = serialBuffer.substring(start, end);
-      start = end + 1;
-      end = serialBuffer.indexOf('-', start);
+void parseSerialPacket(String packet){
+  String parts[16];
+  int partCount = 0;
+  int start = 0;
+  int end = packet.indexOf('-');
 
-    }
-    if (start < serialBuffer.length()){
-      parts[partCount++] = serialBuffer.substring(start);
-    }
-    speed = parts[0].toInt();
-    rpm = parts[1].toInt();
-    absLevel = parts[2].toInt();
-    gear = parts[3];
-    fuelpercentage = parts[4].toInt();
-    engineStatus = parts[5].toInt();
-    tcLevel = parts[6].toInt();
-    hour = parts[7].toInt();
-    minute = parts[8].toInt();
-    fuelPercentageforcalc = fuelpercentage;
-    serialBuffer = "";
+    while (end != -1 && partCount < 16) {
+    parts[partCount++] = packet.substring(start, end);
+    start = end + 1;
+    end = packet.indexOf('-', start);
+  }
 
+  if (start < packet.length() && partCount < 16) {
+    parts[partCount++] = packet.substring(start);
+  }
+
+  speed = parts[0].toInt();
+  rpm = parts[1].toInt();
+  absStatus = (parts[2] == "1");
+  gear = parts[3];
+  fuelpercentage = parts[4].toInt();
+  engineStatus = (parts[5] == "1");
+  tcLevel = parts[6].toInt();
+  hour = parts[7].toInt();
+  minute = parts[8].toInt();
+  left_fuckass_signal = (parts[9] == "1");
+  right_fuckass_signal = (parts[10] == "1");
+  hazard_signal = (parts[11] == "1");
+  highbeams = (parts[12] == "1");
+  handbrake = (parts[13] == "1");
+  headlight = (parts[14] == "1");
+
+  // Serial.println("Packet parsed successfully");
+  // Serial.println(right_fuckass_signal);
+  fuelPercentageforcalc = fuelpercentage;
+    Serial.println((fuelPercentageforcalc/100) * 50);
 }
+
+
+void checkSerial() {
+  while (Serial.available()){
+    char c = Serial.read();
+    if (c == '&'){
+      packetReady = true;
+      break;
+    }
+    serialBuffer += c;
+  }
+
+  if (packetReady) {
+    parseSerialPacket(serialBuffer);
+
+    Serial.println("OK");
+
+    serialBuffer = "";
+    packetReady = false;
+    lastSerialRecieved = millis();
+  }
+}
+
+
+
+
+// void handleSerialData(){
+//     serialBuffer += Serial.readStringUntil('&');
+//     serialBuffer += '&';
+//     String parts[16];
+//     int partCount = 0;
+//     int start = 0;
+//     int end = serialBuffer.indexOf('-');
+
+//     while (end != -1 && partCount < 16){
+//       parts[partCount++] = serialBuffer.substring(start, end);
+//       start = end + 1;
+//       end = serialBuffer.indexOf('-', start);
+
+//     }
+//     if (start < serialBuffer.length()){
+//       parts[partCount++] = serialBuffer.substring(start);
+//     }
+//     speed = parts[0].toInt();
+//     rpm = parts[1].toInt();
+//     absStatus = parts[2];
+//     gear = parts[3];
+//     fuelpercentage = parts[4].toInt();
+//     engineStatus = (parts[5] == "True") ? true : false;
+//     tcLevel = parts[6].toInt();
+//     hour = parts[7].toInt();
+//     minute = parts[8].toInt();
+//     left_fuckass_signal = (parts[9] == "True") ? true : false;
+//     right_fuckass_signal = (parts[10] == "True") ? true : false;
+//     hazard_signal = (parts[11] == "True") ? true : false;
+//     highbeams = (parts[12] == "True") ? true : false;
+//     handbrake = (parts[13] == "True") ? true : false;
+//     headlight = (parts[14] == "True") ? true : false;
+//     Serial.print("speed: " + String(speed) + " rpm: "+ String(rpm) + " abs level: " + String(absStatus) + " gear:" + gear + " fuel percentage: " + String(fuelpercentage) + " engine status:" + String(engineStatus) + " traction level: " + String(tcLevel) + " hour: " + String(hour) + " minute: " + String(minute) + " left signal: " + String(left_fuckass_signal) + " right signal: " + String(right_fuckass_signal) + " hazard lights: " + String(hazard_signal) + " high beams:" + String(highbeams) + " handbrake: " + String(handbrake) + " headlights: " + String(headlight));
+//     fuelPercentageforcalc = fuelpercentage;
+//     serialBuffer = "";
+//     // Serial.println(parts[0] + parts[1]);
+// }
 
 void loop()
 {
+  checkSerial();
+
+  if (millis() - lastSerialRecieved > 1000){
+    engineStatus = false;
+    speed =0;
+    rpm = 0;
+    fuelpercentage = 0;
+  }
+
   // while (Serial.available()){
   //   char c = Serial.read();
   //   serialBuffer + c;
@@ -402,7 +490,7 @@ void loop()
 
  if (millis() - timestamp100ms > 10)
  {
-  if (engineStatus == 1){
+  if (engineStatus == true){
    sendIgnitionKeyOn();
   }
    sendRPM(rpm);
@@ -428,13 +516,24 @@ void loop()
  {
   
    sendFuelLevel((fuelPercentageforcalc/100) * 50); // max 51, logarithmically - keep at 51 unless ets
-   sendParkingBreak(false);
-   if (engineStatus == 1){
-   sendIgnitionStatus();
+   sendParkingBreak(handbrake);
+
+   if (engineStatus){
+    sendIgnitionStatus();
+   }
+
+   if (headlight && !highbeams){
       sendLights(2, 3);
-   }else{
+   }else if (highbeams){
+      sendLights(4, 3);
+   }
+   else
+   {
        sendLights(0, 0);
    }
+
+
+   
   //  sendTripInformation(10, 10, 100);
    sendAirbagSeatbeltCounter();
    disengageCruiseControl();
@@ -447,12 +546,21 @@ void loop()
    timestamp200ms = millis();
  }
 
-   if (Serial.available()){
-    handleSerialData();
-  }
 
 
- if (millis() - timestamp1000ms > 999){
+
+ if (millis() - timestamp1000ms > 667){
+
+if (hazard_signal) {
+  updateTurnSignal(true, true);
+  updateTurnSignal(false, true);
+} else {
+  updateTurnSignal(true, left_fuckass_signal);
+  updateTurnSignal(false, right_fuckass_signal);
+}
+
+
+
   timestamp1000ms = millis();
   runTurnSignal();
  }
