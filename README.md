@@ -75,8 +75,8 @@ It's then sent via serial to the Arduino, where it's data is parsed and sent as 
 
 ## Credits
 
-[e90-dashboard-ets2](https://github.com/Marcin648/e90-dashboard-ets2) --- used for speed, rpm and counter frames
-[BMW Canbus Codes](https://www.loopybunny.co.uk/CarPC/k_can.html) --- used for most can codes
-[Controlling BMW E90 Instrument Cluster](https://forum.arduino.cc/t/controlling-bmw-e90-instrument-cluster/670728) --- used for wiring diagram + general wiring information
-[opendbc-BMW-E8x-E9x](https://github.com/dzid26/opendbc-BMW-E8x-E9x) --- used for dbc file which was used for certain can commands such as transmission
+[e90-dashboard-ets2](https://github.com/Marcin648/e90-dashboard-ets2) --- used for speed, rpm and counter frames<br>
+[BMW Canbus Codes](https://www.loopybunny.co.uk/CarPC/k_can.html) --- used for most can codes<br>
+[Controlling BMW E90 Instrument Cluster](https://forum.arduino.cc/t/controlling-bmw-e90-instrument-cluster/670728) --- used for wiring diagram + general wiring information<br>
+[opendbc-BMW-E8x-E9x](https://github.com/dzid26/opendbc-BMW-E8x-E9x) --- used for dbc file which was used for certain can commands such as transmission<br>
 [Assetto Corsa Lua SDK](https://github.com/ac-custom-shaders-patch/acc-lua-sdk) --- used for lua app
