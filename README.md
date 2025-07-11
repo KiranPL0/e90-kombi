@@ -67,7 +67,7 @@ From then on, every time you restart your computer, run client.pyw and start Ass
 
 ## Data Pipeline
 
-Telemetry Data follows a "pipeline" as it makes it's way to the Arduino.
+Telemetry Data follows a "pipeline" as it makes it's way to the Arduino.<br>
 **Assetto Corsa App (Lua App)** --- UDP ⮕ **Python Script** --- Serial ⮕ **Arduino** --- Canbus ⮕ **Instrument Cluster**
 
 Data is collected through the Assetto Corsa Lua app, and is then sent as UDP packets to the python script via localhost.
