@@ -19,7 +19,7 @@ Python
 
 Connect your CAN Cables to the cluster like this...
 ![connect can-hi and can-lo
-](https://europe1.discourse-cdn.com/arduino/original/4X/0/a/d/0adcfa0b3805bf037b1e4c1fd241c35ea7792bcb.jpeg)
+](https://europe1.discourse-cdn.com/arduino/original/4X/0/a/d/0adcfa0b3805bf037b1e4c1fd241c35ea7792bcb.jpeg)<br>
 Use a 12V power supply for the Instrument Cluster's power.
 I reccomend using a relay to easily switch on/off the cluster with your arduino. (Connect Digital Pin 2 to your switch from the Arduino for a 5V signal to the relay's middle pin to trigger from a switch)
 
