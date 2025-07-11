@@ -52,34 +52,4 @@ void sendGear(int gear, bool manual = false, int manualgear = 0, bool sport = fa
     if (rollingCounter > 14){
         rollingCounter = 0;
     }
-    // CAN.write(0x00);
-    // CAN.write(0x00);
-    // CAN.write(0x00); // counter
-    // switch(gear){
-    //     case 1:
-    //     //park
-    //     CAN.write(0x01);
-    //     gearselected = 0x01;
-    //     break;
-    //     case 2:
-    //     // reverse
-    //     CAN.write(0x02);
-    //     gearselected = 0x02;
-    //     break;
-    //     case 3:
-    //     //neutral
-    //     CAN.write(0x03);
-    //     gearselected = 0x04;
-    //     break;
-    //     case 4:
-    //     //drive
-    //     CAN.write(0x08);
-    //     gearselected = 0x08;
-    //     break;
-    // }
-    // CAN.write(0xFF);
-    // CAN.write(gearselected ^ 0xF);
-    // CAN.write(0x00);
-
-    // CAN.endPacket();
 }

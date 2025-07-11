@@ -1,6 +1,9 @@
 #include <commands.h>
 #include <CAN.h>
 
+// the following code works, but is unused at this time - you may delete this file and delete the corresponding function in commands.h (located under /include/commands.h) to save on board flash storage
+
+
 uint8_t cruisetimer = 0;
 void activateCruiseControl(int vehicle_speed){
     

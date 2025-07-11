@@ -15,4 +15,6 @@ void activateCruiseControl(int vehicle_speed);
 void disengageCruiseControl();
 void sendFuelLevel(int percent);
 void sendTripInformation(int averagelitres, int range, int fuelpercentage);
-void sendTrunkStatus(bool opened);
+void sendAirbagSeatbeltCounter();
+void sendIgnitionKeyOn();
+void sendIgnitionStatus();

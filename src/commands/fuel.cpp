@@ -22,15 +22,3 @@ void sendFuelLevel(int percent){
     CAN.endPacket();
 
 }
-
-// void sendTripInformation(int averagelitres, int range, int fuelpercentage){
-//     CAN.beginPacket(0x330);
-//     CAN.write(0x00);
-//     CAN.write(0x00);
-//     CAN.write(0x00);
-//     CAN.write(averagelitres);
-//     CAN.write(fuelpercentage * 2.55f); // byte 4 damped raw left fuel sensor
-//     CAN.write(fuelpercentage * 2.55f);
-//     CAN.write(0x9C);
-//     CAN.write(0x34);
-// }
